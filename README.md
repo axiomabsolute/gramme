@@ -10,6 +10,7 @@ Requires Go v1.15+
 - Build `go build`
 - Test `go test ./...`
     + Recursively runes tests in subpackages of the root module
+- *Note*: Some code relies on generated files. If their sources are changed, run `go generate ./...` to re-synthesize files.
 
 ### Features
 
