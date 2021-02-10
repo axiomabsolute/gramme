@@ -58,3 +58,12 @@ func BatchAnnotate(annotators []Annotator, text string) []Annotation {
 	}
 	return results
 }
+
+// StandardAnnotators - Return set of standard annotators
+func StandardAnnotators() []Annotator {
+	return []Annotator{
+		AnnotateWords,
+		AnnotateLines,
+		AnnotateBuffer,
+	}
+}
