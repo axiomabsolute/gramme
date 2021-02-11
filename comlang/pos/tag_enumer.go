@@ -8,9 +8,9 @@ import (
 	"fmt"
 )
 
-const _TagName = "VerbNounTextObjectPreposition"
+const _TagName = "UnknownVerbTextObjectPreposition"
 
-var _TagIndex = [...]uint8{0, 4, 8, 18, 29}
+var _TagIndex = [...]uint8{0, 7, 11, 21, 32}
 
 func (i Tag) String() string {
 	if i < 0 || i >= Tag(len(_TagIndex)-1) {
@@ -22,10 +22,10 @@ func (i Tag) String() string {
 var _TagValues = []Tag{0, 1, 2, 3}
 
 var _TagNameToValueMap = map[string]Tag{
-	_TagName[0:4]:   0,
-	_TagName[4:8]:   1,
-	_TagName[8:18]:  2,
-	_TagName[18:29]: 3,
+	_TagName[0:7]:   0,
+	_TagName[7:11]:  1,
+	_TagName[11:21]: 2,
+	_TagName[21:32]: 3,
 }
 
 // TagString retrieves an enum value from the enum constants string name.

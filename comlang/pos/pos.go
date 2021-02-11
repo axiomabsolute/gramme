@@ -6,8 +6,8 @@ type Tag int
 
 // Enum for parts of speech
 const (
-	Verb Tag = iota
-	Noun
+	Unknown Tag = iota
+	Verb
 	TextObject
 	Preposition
 )
