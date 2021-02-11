@@ -8,7 +8,8 @@ type Mode int
 // Editor modes
 //go:generate enumer -type=Mode -json -text
 const (
-	ErrorMode Mode = iota
+	Unkonwn Mode = iota
+	ErrorMode
 	NormalMode
 	InsertMode
 )
