@@ -15,3 +15,9 @@ type Region struct {
 	Left  Span
 	Right Span
 }
+
+// Selection - A region and associated cursor which lies within the region
+type Selection struct {
+	Region Region
+	Cursor Cursor
+}
