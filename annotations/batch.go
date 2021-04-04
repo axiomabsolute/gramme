@@ -6,11 +6,13 @@ import (
 	"github.com/axiomabsolute/gramme/primitives"
 )
 
+// Batch - An Annotator which annotates an entire text greedily
 type Batch struct {
 	text        *string
 	annotations []Annotation
 }
 
+// NewBatch - Create a Batch and run annotators
 func NewBatch(text *string) *Batch {
 	batch := Batch{text: text}
 	batch.BatchAnnotate([]AnnotationRule{annotateBuffer, annotateLines, annotateWords})
@@ -27,6 +29,7 @@ func (b Batch) Containing(cursor primitives.Cursor) []Annotation {
 	return results
 }
 
+// All - Returns all annotations
 func (b Batch) All() []Annotation {
 	return b.annotations
 }
@@ -62,13 +65,13 @@ func annotateByDelimiter(tag Tag, delimiter *regexp.Regexp, text string) []Annot
 	return results
 }
 
-// AnnotateLines - Generate annotations for lines, separated by one more more newline characters
+// annotateLines - Generate annotations for lines, separated by one more more newline characters
 func annotateLines(text string) []Annotation {
 	pattern := regexp.MustCompile("\\A|\n+|\\z")
 	return annotateByDelimiter(LINE, pattern, text)
 }
 
-// AnnotateWords - Generate annotations for wods, separated by punctuation or whitespace
+// annotateWords - Generate annotations for wods, separated by punctuation or whitespace
 func annotateWords(text string) []Annotation {
 	pattern := regexp.MustCompile("\\A|\\n|[\\.,!?]?\\s+|\\z")
 	return annotateByDelimiter(WORD, pattern, text)

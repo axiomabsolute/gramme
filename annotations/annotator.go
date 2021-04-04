@@ -2,6 +2,9 @@ package annotations
 
 import "github.com/axiomabsolute/gramme/primitives"
 
+// Annotator - A collection of AnnotationRule definitions and a
+// strategy for applying them to a given text. Each implementation is
+// responsible for defining how and when the rules are applied.
 type Annotator interface {
 	Containing(primitives.Cursor) []Annotation
 }
