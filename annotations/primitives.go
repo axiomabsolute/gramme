@@ -2,8 +2,8 @@ package annotations
 
 import "github.com/axiomabsolute/gramme/primitives"
 
-// Annotator - A function that analyzes a source text and produces a slice of Annotations
-type Annotator func(text string) []Annotation
+// AnnotationRule - A function that analyzes a source text and produces a slice of Annotations
+type AnnotationRule func(text string) []Annotation
 
 // Tag - A type tag for annotations
 type Tag int

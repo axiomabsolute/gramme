@@ -6,8 +6,33 @@ import (
 	"github.com/axiomabsolute/gramme/primitives"
 )
 
+type Batch struct {
+	text        *string
+	annotations []Annotation
+}
+
+func NewBatch(text *string) *Batch {
+	batch := Batch{text: text}
+	batch.BatchAnnotate([]AnnotationRule{annotateBuffer, annotateLines, annotateWords})
+	return &batch
+}
+
+func (b Batch) Containing(cursor primitives.Cursor) []Annotation {
+	results := []Annotation{}
+	for _, annotation := range b.annotations {
+		if annotation.Left.A <= cursor && annotation.Right.B >= cursor {
+			results = append(results, annotation)
+		}
+	}
+	return results
+}
+
+func (b Batch) All() []Annotation {
+	return b.annotations
+}
+
 // AnnotateBuffer - Generates Buffer annotations for text
-func AnnotateBuffer(text string) []Annotation {
+func annotateBuffer(text string) []Annotation {
 	textLength := primitives.Cursor(len(text))
 	return []Annotation{
 		{
@@ -21,7 +46,7 @@ func AnnotateBuffer(text string) []Annotation {
 }
 
 // AnnotateByDelimiter - Given a pattern that defines a delimiter, annotate the given text into overlapping regions
-func AnnotateByDelimiter(tag Tag, delimiter *regexp.Regexp, text string) []Annotation {
+func annotateByDelimiter(tag Tag, delimiter *regexp.Regexp, text string) []Annotation {
 	matches := delimiter.FindAllStringIndex(text, -1)
 	results := []Annotation{}
 	for i := 0; i < len(matches)-1; i++ {
@@ -38,23 +63,24 @@ func AnnotateByDelimiter(tag Tag, delimiter *regexp.Regexp, text string) []Annot
 }
 
 // AnnotateLines - Generate annotations for lines, separated by one more more newline characters
-func AnnotateLines(text string) []Annotation {
+func annotateLines(text string) []Annotation {
 	pattern := regexp.MustCompile("\\A|\n+|\\z")
-	return AnnotateByDelimiter(LINE, pattern, text)
+	return annotateByDelimiter(LINE, pattern, text)
 }
 
 // AnnotateWords - Generate annotations for wods, separated by punctuation or whitespace
-func AnnotateWords(text string) []Annotation {
+func annotateWords(text string) []Annotation {
 	pattern := regexp.MustCompile("\\A|\\n|[\\.,!?]?\\s+|\\z")
-	return AnnotateByDelimiter(WORD, pattern, text)
+	return annotateByDelimiter(WORD, pattern, text)
 }
 
 // BatchAnnotate - Given a set of annotators, run each on the text and merge results
-func BatchAnnotate(annotators []Annotator, text string) []Annotation {
+func (b *Batch) BatchAnnotate(annotators []AnnotationRule) []Annotation {
 	results := []Annotation{}
 	for _, annotator := range annotators {
-		annotations := annotator(text)
+		annotations := annotator(*b.text)
 		results = append(results, annotations...)
 	}
+	b.annotations = results
 	return results
 }

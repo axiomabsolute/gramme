@@ -6,14 +6,20 @@ import (
 	"github.com/axiomabsolute/gramme/primitives"
 )
 
-const testText = `The limerick packs laughs anatomical
+var testText string = `The limerick packs laughs anatomical
 Into space that is quite economical.
 But the good ones I've seen
 So seldom are clean
 And the clean ones so seldom are comical.`
 
+func setupBatchTest() *Batch {
+	b := NewBatch(&testText)
+	return b
+}
+
 func TestAnnotateBuffer(t *testing.T) {
-	result := AnnotateBuffer(testText)
+	annotator := setupBatchTest()
+	result := OfTag(annotator.All(), BUFFER)
 	if len(result) != 1 {
 		t.Errorf("AnnotateBuffer(..) should return exactly one annotation")
 	}
@@ -33,14 +39,16 @@ func TestAnnotateBuffer(t *testing.T) {
 }
 
 func TestAnnotateLines(t *testing.T) {
-	result := AnnotateLines(testText)
+	annotator := setupBatchTest()
+	result := OfTag(annotator.All(), LINE)
 	if len(result) != 5 {
 		t.Errorf("AnnotateLines(..) should return 5 lines")
 	}
 }
 
 func TestAnnotateWords(t *testing.T) {
-	result := AnnotateWords(testText)
+	annotator := setupBatchTest()
+	result := OfTag(annotator.All(), WORD)
 	if len(result) != 29 {
 		t.Errorf("AnnotateWords(..) should return 29 words")
 	}
