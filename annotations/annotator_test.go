@@ -12,6 +12,44 @@ But the good ones I've seen
 So seldom are clean
 And the clean ones so seldom are comical.`
 
+var testAnnotatedTexts [][3]string = [][3]string{
+	{"", "The limerick packs laughs anatomical\nInto space that is quite economical.\nBut the good ones I've seen\nSo seldom are clean\nAnd the clean ones so seldom are comical.", ""},
+	{"", "The limerick packs laughs anatomical", "\n"},
+	{"\n", "Into space that is quite economical.", "\n"},
+	{"\n", "But the good ones I've seen", "\n"},
+	{"\n", "So seldom are clean", "\n"},
+	{"\n", "And the clean ones so seldom are comical.", ""},
+	{"", "The", " "},
+	{" ", "limerick", " "},
+	{" ", "packs", " "},
+	{" ", "laughs", " "},
+	{" ", "anatomical", "\n"},
+	{"\n", "Into", " "},
+	{" ", "space", " "},
+	{" ", "that", " "},
+	{" ", "is", " "},
+	{" ", "quite", " "},
+	{" ", "economical", ".\n"},
+	{".\n", "But", " "},
+	{" ", "the", " "},
+	{" ", "good", " "},
+	{" ", "ones", " "},
+	{" ", "I've", " "},
+	{" ", "seen", "\n"},
+	{"\n", "So", " "},
+	{" ", "seldom", " "},
+	{" ", "are", " "},
+	{" ", "clean", "\n"},
+	{"\n", "And", " "},
+	{" ", "the", " "},
+	{" ", "clean", " "},
+	{" ", "ones", " "},
+	{" ", "so", " "},
+	{" ", "seldom", " "},
+	{" ", "are", " "},
+	{" ", "comical", "."},
+}
+
 func TestOfTag(t *testing.T) {
 	setup := []Annotation{
 		{Tag: LINE},

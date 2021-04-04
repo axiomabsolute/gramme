@@ -3,7 +3,7 @@ package annotations
 import "github.com/axiomabsolute/gramme/primitives"
 
 // AnnotationRule - A function that analyzes a source text and produces a slice of Annotations
-type AnnotationRule func(text string) []Annotation
+type AnnotationRule func(text *string) []Annotation
 
 // Tag - A type tag for annotations
 type Tag int
@@ -24,11 +24,11 @@ type Annotation struct {
 }
 
 // GetAnnotatedText - Returns 3 string; the left delimiter, annotated region, and right delimiter
-func GetAnnotatedText(text string, annotation Annotation) []string {
+func GetAnnotatedText(text string, annotation Annotation) [3]string {
 	left := text[annotation.Left.A:annotation.Left.B]
 	middle := text[annotation.Left.B:annotation.Right.A]
 	right := text[annotation.Right.A:annotation.Right.B]
-	return []string{
+	return [3]string{
 		left, middle, right,
 	}
 }

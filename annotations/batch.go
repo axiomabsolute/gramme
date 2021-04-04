@@ -35,8 +35,8 @@ func (b Batch) All() []Annotation {
 }
 
 // AnnotateBuffer - Generates Buffer annotations for text
-func annotateBuffer(text string) []Annotation {
-	textLength := primitives.Cursor(len(text))
+func annotateBuffer(text *string) []Annotation {
+	textLength := primitives.Cursor(len(*text))
 	return []Annotation{
 		{
 			Tag: BUFFER,
@@ -49,8 +49,8 @@ func annotateBuffer(text string) []Annotation {
 }
 
 // AnnotateByDelimiter - Given a pattern that defines a delimiter, annotate the given text into overlapping regions
-func annotateByDelimiter(tag Tag, delimiter *regexp.Regexp, text string) []Annotation {
-	matches := delimiter.FindAllStringIndex(text, -1)
+func annotateByDelimiter(tag Tag, delimiter *regexp.Regexp, text *string) []Annotation {
+	matches := delimiter.FindAllStringIndex(*text, -1)
 	results := []Annotation{}
 	for i := 0; i < len(matches)-1; i++ {
 		left := matches[i]
@@ -66,14 +66,14 @@ func annotateByDelimiter(tag Tag, delimiter *regexp.Regexp, text string) []Annot
 }
 
 // annotateLines - Generate annotations for lines, separated by one more more newline characters
-func annotateLines(text string) []Annotation {
+func annotateLines(text *string) []Annotation {
 	pattern := regexp.MustCompile("\\A|\n+|\\z")
 	return annotateByDelimiter(LINE, pattern, text)
 }
 
 // annotateWords - Generate annotations for wods, separated by punctuation or whitespace
-func annotateWords(text string) []Annotation {
-	pattern := regexp.MustCompile("\\A|\\n|[\\.,!?]?\\s+|\\z")
+func annotateWords(text *string) []Annotation {
+	pattern := regexp.MustCompile("\\A|\\n|[\\.,!?]?(?:\\s+|\\z)")
 	return annotateByDelimiter(WORD, pattern, text)
 }
 
@@ -81,7 +81,7 @@ func annotateWords(text string) []Annotation {
 func (b *Batch) BatchAnnotate(annotators []AnnotationRule) []Annotation {
 	results := []Annotation{}
 	for _, annotator := range annotators {
-		annotations := annotator(*b.text)
+		annotations := annotator(b.text)
 		results = append(results, annotations...)
 	}
 	b.annotations = results
