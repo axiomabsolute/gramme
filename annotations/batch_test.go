@@ -12,7 +12,7 @@ func setupBatchTest() *Batch {
 func TestAll(t *testing.T) {
 	b := setupBatchTest()
 	all := b.All()
-	expectedCount := len(testAnnotatedTexts)
+	expectedCount := len(annotatedTexts)
 	if len(all) != expectedCount {
 		t.Errorf("Expected BatchAnnotator.All to return %d result, got %d", expectedCount, len(all))
 	}

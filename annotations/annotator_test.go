@@ -13,7 +13,8 @@ But the good ones I've seen
 So seldom are clean
 And the clean ones so seldom are comical.`
 
-var testAnnotatedTexts [][3]string = [][3]string{
+var annotatedTextsMap map[[3]string]bool = map[[3]string]bool{}
+var annotatedTexts [][3]string = [][3]string{
 	{"", "The limerick packs laughs anatomical\nInto space that is quite economical.\nBut the good ones I've seen\nSo seldom are clean\nAnd the clean ones so seldom are comical.", ""},
 	{"", "The limerick packs laughs anatomical", "\n"},
 	{"\n", "Into space that is quite economical.", "\n"},
@@ -88,6 +89,18 @@ var testAnnotationsMarshalled []string = []string{
 	`{"Tag":"WORD","Left":{"A":143,"B":144},"Right":{"A":150,"B":151}}`,
 	`{"Tag":"WORD","Left":{"A":150,"B":151},"Right":{"A":154,"B":155}}`,
 	`{"Tag":"WORD","Left":{"A":154,"B":155},"Right":{"A":162,"B":163}}`,
+}
+
+func GetTestAnnotatedTextMap() map[[3]string]bool {
+	if annotatedTextsMap != nil {
+		return annotatedTextsMap
+	}
+	result := map[[3]string]bool{}
+	for _, v := range annotatedTexts {
+		result[v] = true
+	}
+	annotatedTextsMap = result
+	return result
 }
 
 func GetTestAnnotationsMap() map[Annotation]bool {
