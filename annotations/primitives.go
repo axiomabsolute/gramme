@@ -6,6 +6,7 @@ import "github.com/axiomabsolute/gramme/primitives"
 type AnnotationRule func(text *string) []Annotation
 
 // Tag - A type tag for annotations
+//go:generate enumer -type=Tag -json -text
 type Tag int
 
 const (
