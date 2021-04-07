@@ -17,14 +17,9 @@ func TestAll(t *testing.T) {
 		t.Errorf("Expected BatchAnnotator.All to return %d result, got %d", expectedCount, len(all))
 	}
 
-	uniqueTestAnnotatedTexts := map[[3]string]bool{}
-	for _, annotation := range testAnnotatedTexts {
-		uniqueTestAnnotatedTexts[annotation] = true
-	}
-
+	uniqueAnnotations := GetTestAnnotationsMap()
 	for _, annotation := range all {
-		texts := GetAnnotatedText(testText, annotation)
-		if !uniqueTestAnnotatedTexts[texts] {
+		if !uniqueAnnotations[annotation] {
 			t.Errorf("Extracted annotation %v not in expected annotations", annotation)
 		}
 	}
