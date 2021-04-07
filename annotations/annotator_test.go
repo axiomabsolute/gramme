@@ -13,7 +13,7 @@ But the good ones I've seen
 So seldom are clean
 And the clean ones so seldom are comical.`
 
-var annotatedTextsMap map[[3]string]bool = map[[3]string]bool{}
+var annotatedTextsMap map[[3]string]bool
 var annotatedTexts [][3]string = [][3]string{
 	{"", "The limerick packs laughs anatomical\nInto space that is quite economical.\nBut the good ones I've seen\nSo seldom are clean\nAnd the clean ones so seldom are comical.", ""},
 	{"", "The limerick packs laughs anatomical", "\n"},

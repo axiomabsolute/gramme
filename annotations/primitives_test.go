@@ -24,3 +24,14 @@ func TestGetAnnotatedText(t *testing.T) {
 		t.Errorf("Expected suffix ` `")
 	}
 }
+
+func TestAllGetAnnotatedText(t *testing.T) {
+	annotationsMap := GetTestAnnotationsMap()
+	annotatedTextsMap := GetTestAnnotatedTextMap()
+	for annotation, _ := range annotationsMap {
+		text := GetAnnotatedText(testText, annotation)
+		if !annotatedTextsMap[text] {
+			t.Errorf("Expected texts %v", text)
+		}
+	}
+}
